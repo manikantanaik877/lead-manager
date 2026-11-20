@@ -1,4 +1,7 @@
-const Database = require('better-sqlite3');
+// Node's built-in SQLite driver: no native module to compile, so `npm install` works everywhere.
+const { DatabaseSync } = require('node:sqlite');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS users (
@@ -31,11 +34,10 @@ CREATE INDEX IF NOT EXISTS idx_leads_user_created ON leads (user_id, created_at)
 function createDb(file = './data/leads.db') {
   if (file !== ':memory:') {
     // Make sure the directory exists so first run "just works".
-    require('fs').mkdirSync(require('path').dirname(file), { recursive: true });
+    fs.mkdirSync(path.dirname(file), { recursive: true });
   }
-  const db = new Database(file);
-  db.pragma('journal_mode = WAL');
-  db.pragma('foreign_keys = ON');
+  const db = new DatabaseSync(file);
+  db.exec('PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;');
   db.exec(SCHEMA);
   return db;
 }

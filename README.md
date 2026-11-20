@@ -33,13 +33,13 @@ A small full-stack web app for a sales user to capture and track leads: add, lis
 | --- | --- | --- |
 | Frontend | React 19 + Vite, plain CSS | Matches the team's stack; no UI library keeps the bundle small (~74 kB gzipped) and the styling easy to read |
 | Backend | Node.js + Express 5 | Matches the team's stack; small, explicit, easy to follow |
-| Database | SQLite (`better-sqlite3`) | Zero setup for reviewers (`npm install` and go), real SQL, foreign keys and indexes. Swapping to PostgreSQL would only touch `db.js` and the queries |
+| Database | SQLite via Node's built-in `node:sqlite` | Zero setup for reviewers: no database server and no native module to compile, so `npm install` works on any machine. Real SQL, foreign keys and indexes. The driver is still marked experimental in Node 22, which is fine for this scope; swapping to PostgreSQL would only touch `db.js` and the query calls |
 | Auth | bcrypt password hashes + JWT bearer tokens | Stateless and simple |
 | Tests | `node:test` + supertest | No extra test framework; runs against an in-memory database |
 
 ## Run it locally
 
-Requires Node.js 22+ (the test runner uses glob patterns).
+Requires Node.js 22.13 or newer (built-in SQLite driver and glob support in the test runner).
 
 ```bash
 # 1. Install dependencies for both apps

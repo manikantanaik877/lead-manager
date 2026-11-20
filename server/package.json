@@ -5,16 +5,15 @@
   "description": "REST API for the Lead Manager app",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "node --watch src/index.js",
-    "test": "node --test \"tests/**/*.test.js\""
+    "start": "node --disable-warning=ExperimentalWarning src/index.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch src/index.js",
+    "test": "node --disable-warning=ExperimentalWarning --test \"tests/**/*.test.js\""
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.13"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^13.2.0",
     "cors": "^2.8.6",
     "dotenv": "^18.0.10",
     "express": "^5.3.0",

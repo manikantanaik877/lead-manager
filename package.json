@@ -11,5 +11,7 @@
     "start": "npm --prefix server start",
     "test": "npm --prefix server test"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22.13"
+  }
 }
