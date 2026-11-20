@@ -37,7 +37,7 @@ function createApp(db, config) {
   // Optional single-service deployment: serve the built frontend from this process.
   if (config.clientDist) {
     app.use(express.static(config.clientDist));
-    app.get('*', (_req, res) => res.sendFile(path.join(config.clientDist, 'index.html')));
+    app.get('/{*splat}', (_req, res) => res.sendFile(path.join(config.clientDist, 'index.html')));
   } else {
     app.use(notFoundHandler);
   }
