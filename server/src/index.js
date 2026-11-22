@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
@@ -11,18 +12,25 @@ if (isProd && !process.env.JWT_SECRET) {
   process.exit(1);
 }
 
-// If the frontend has been built, serve it from this process (single-service deploys).
+// Frontend build directory
 const clientDist = path.resolve(__dirname, '../../client/dist');
 
 const config = {
-  port: Number(process.env.PORT) || 4000,
+  port: Number(process.env.PORT) || 3000,
   jwtSecret: process.env.JWT_SECRET || 'dev-only-secret-change-me',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   corsOrigin: process.env.CORS_ORIGIN || '*',
   clientDist: fs.existsSync(clientDist) ? clientDist : null,
 };
 
-const db = createDb(process.env.DATABASE_FILE || './data/leads.db');
+// Initialize database
+const db = createDb(
+  process.env.DATABASE_FILE || './data/leads.db'
+);
+
 const app = createApp(db, config);
 
-app.listen(config.port, () => console.log(`Lead Manager listening on http://localhost:${config.port}`));
+// Start server
+app.listen(config.port, '0.0.0.0', () => {
+  console.log(`Server running on port ${config.port}`);
+});
